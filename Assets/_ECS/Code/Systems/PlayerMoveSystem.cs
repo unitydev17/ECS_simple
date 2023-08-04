@@ -18,35 +18,39 @@ public class PlayerMoveSystem : IEcsRunSystem
             ref var input = ref _filter.Get2(i);
 
 
-            if (Mathf.Abs(input.moveInput.x) > 0)
-            {
-                _velocity += input.moveInput.x * 0.1f;
-            }
+            PuddleMove(input, player);
+        }
+    }
 
-            if (Mathf.Abs(_velocity) < 0.01f)
-            {
-                _velocity = 0;
-            }
-            else
-            {
-                _velocity *= 0.8f;
-            }
-            
-            Debug.Log(_velocity);
+    private void PuddleMove(PlayerInputData input, Player player)
+    {
+        if (Mathf.Abs(input.moveInput.x) > 0)
+        {
+            _velocity += input.moveInput.x * 0.1f;
+        }
+
+        if (Mathf.Abs(_velocity) < 0.01f)
+        {
+            _velocity = 0;
+        }
+        else
+        {
+            _velocity *= 0.8f;
+        }
+
+        // Debug.Log(_velocity);
 
 
-            var newPos = player.transform.position;
-            newPos.x += _velocity;
-            
-            if (CheckAllowedMove(player, newPos))
-            {
-                player.transform.position = newPos;
-            }
-            else
-            {
-                _velocity *= 0.5f;
-            }
+        var newPos = player.transform.position;
+        newPos.x += _velocity;
 
+        if (CheckAllowedMove(player, newPos))
+        {
+            player.transform.position = newPos;
+        }
+        else
+        {
+            _velocity *= 0.5f;
         }
     }
 

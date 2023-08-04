@@ -16,9 +16,7 @@ public class PlayerInitSystem : IEcsInitSystem
 
         var playerGo = Object.Instantiate(_staticData.puddlePrefab);
         playerGo.transform.position = _sceneData.puddleSpawnPoint.position;
-        
-        player.playerRigidbody = playerGo.GetComponent<Rigidbody>();
-        player.playerSpeed = _staticData.playerSpeed;
+
         player.transform = playerGo.transform;
         player.collider = playerGo.GetComponent<CapsuleCollider>();
     }

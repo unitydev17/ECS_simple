@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puddlePrefab: {fileID: 6544340791800953399, guid: 93f145ab34227400a838d6934d0baa40, type: 3}
   playerSpeed: 0.2
+  ballPrefab: {fileID: 8070004591167619189, guid: 0e2f5b922787a416ea6997b928a37bb2, type: 3}

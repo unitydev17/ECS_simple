@@ -19,7 +19,8 @@ public class EcsStartup : MonoBehaviour
 
         _systems.Add(new PlayerInitSystem())
             .Add(new PlayerInputSystem())
-            //.Add(new PlayerRotationSystem())
+            .Add(new BallSpawnSystem())
+            .Add(new BallMoveSystem())
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(runtimeData)

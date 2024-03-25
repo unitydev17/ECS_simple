@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141ad5cfbb89414684425dde8e4215ba, type: 3}
   m_Name: StaticData
   m_EditorClassIdentifier: 
-  puddlePrefab: {fileID: 6544340791800953399, guid: 93f145ab34227400a838d6934d0baa40, type: 3}
-  playerSpeed: 0.2
-  ballPrefab: {fileID: 8070004591167619189, guid: 0e2f5b922787a416ea6997b928a37bb2, type: 3}
+  puddlePrefab: {fileID: 7182733545205749901, guid: 0ec96ceb72d7e4a3aa8a6e94bba7d1f6, type: 3}
+  ballPrefab: {fileID: 8526515945378998880, guid: 0a4d7696020604484aacb3b1b47b7b62, type: 3}

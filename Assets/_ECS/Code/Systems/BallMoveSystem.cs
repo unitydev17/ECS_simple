@@ -4,7 +4,8 @@ using UnityEngine;
 public class BallMoveSystem : IEcsRunSystem
 {
     private EcsFilter<Ball> _filter;
-    private readonly Collider[] _hits = new Collider[3];
+    private readonly Collider2D[] _hits = new Collider2D[3];
+    private RuntimeData _runtimeData;
 
     public void Run()
     {
@@ -12,38 +13,75 @@ public class BallMoveSystem : IEcsRunSystem
         {
             ref var ball = ref _filter.Get1(i);
 
-            var pos = ball.transform.position;
-            pos += ball.direction * (Time.deltaTime * 10);
 
-            if (CanMove(ref ball, pos))
-            {
-                ball.transform.position = pos;
-            }
+            CheckCollisions(ref ball);
+            UpdatePosition(ref ball);
+            CheckBorders(ref ball);
         }
     }
 
-    private bool CanMove(ref Ball ball, Vector3 pos)
+    private void CheckBorders(ref Ball ball)
     {
-        var numCollider = Physics.OverlapSphereNonAlloc(pos, ball.collider.radius, _hits);
-        if (numCollider <= 0) return true;
+        Vector2 ballPos = ball.transform.position;
 
-        for (var i = 0; i < numCollider; i++)
+        var half = ball.collider.bounds.extents.x;
+        
+        if (ballPos.x - half < -_runtimeData.boardExtents.x)
         {
-            var isBallCollision = !_hits[i].gameObject.Equals(ball.transform.gameObject) && _hits[i].CompareTag("Ball");
-            
-            if (!(_hits[i].CompareTag("Wall") || _hits[i].CompareTag("Puddle") || isBallCollision)) continue;
-
-            var position = ball.transform.position;
-            var negVec = position - _hits[i].ClosestPoint(position);
-            ball.direction = Vector3.Reflect(ball.direction, -negVec);
-            // ball.direction = (ball.direction + 2 * negVec + Random.onUnitSphere * 0.01f).normalized;
-            // ball.direction.y = 0;
-
-         
-
-            return false;
+            ballPos.x = half -_runtimeData.boardExtents.x;
+            ball.transform.position = ballPos;
+            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.right);
+        }
+        else if (ballPos.x + half > _runtimeData.boardExtents.x)
+        {
+            ballPos.x = _runtimeData.boardExtents.x - half;
+            ball.transform.position = ballPos;
+            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.left);
+        }
+        
+        
+        if (ballPos.y + half > _runtimeData.boardExtents.y)
+        {
+            ballPos.y = _runtimeData.boardExtents.y - half;
+            ball.transform.position = ballPos;
+            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.down);
+        }
+        else if (ballPos.y - half < -_runtimeData.boardExtents.y)
+        {
+            ballPos.y = -_runtimeData.boardExtents.y + half;
+            ball.transform.position = ballPos;
+            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.up);
         }
 
-        return true;
+
+        Debug.DrawLine(ballPos, (Vector3) ballPos + ball.velocity * 3, Color.white, 5);
+    }
+
+
+    private static void UpdatePosition(ref Ball ball)
+    {
+        var pos = ball.transform.position;
+        pos += ball.velocity * (Time.deltaTime * 10);
+        ball.velocity *= 0.99f;
+        ball.transform.position = pos;
+    }
+
+    private void CheckCollisions(ref Ball ball)
+    {
+        var numCollider = Physics2D.OverlapCircleNonAlloc(ball.transform.position, ball.collider.radius, _hits);
+        if (numCollider < 0) return;
+        for (var i = 0;
+            i < numCollider;
+            i++)
+        {
+            var isPuddle = _hits[i].CompareTag("Puddle");
+            if (isPuddle)
+            {
+                var puddleTr = _hits[i].transform;
+                // ball.velocity = ball.transform.position - puddleTr.position;
+                ball.velocity += _runtimeData.playerPuddleVelocity * 3;
+                continue;
+            }
+        }
     }
 }

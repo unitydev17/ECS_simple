@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class PlayerMoveSystem : IEcsRunSystem
 {
-    private const string WallTag = "Wall";
     private EcsFilter<Player, PlayerInputData> _filter;
+    private RuntimeData _runtimeData;
+    private Camera _camera;
 
-    private readonly RaycastHit[] _hits = new RaycastHit[3];
-
-    private float _velocity;
+    private Vector3 _prevPos;
 
     public void Run()
     {
@@ -17,65 +16,41 @@ public class PlayerMoveSystem : IEcsRunSystem
             ref var player = ref _filter.Get1(i);
             ref var input = ref _filter.Get2(i);
 
-
-            PuddleMove(input, player);
+            PuddleMove(player, input);
         }
     }
 
-    private void PuddleMove(PlayerInputData input, Player player)
+    private void PuddleMove(Player player, PlayerInputData input)
     {
-        if (Mathf.Abs(input.moveInput.x) > 0)
-        {
-            _velocity += input.moveInput.x * 0.1f;
-        }
+        var (tap, movePos) = input.moveInput;
+        if (!tap) return;
 
-        if (Mathf.Abs(_velocity) < 0.01f)
-        {
-            _velocity = 0;
-        }
-        else
-        {
-            _velocity *= 0.8f;
-        }
+        var targetPos = _camera.ScreenToWorldPoint(movePos);
+        targetPos.z = 0;
 
-        // Debug.Log(_velocity);
+        var currPos = player.transform.position;
 
 
-        var newPos = player.transform.position;
-        newPos.x += _velocity;
+        var nextPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * 100);
+        player.transform.position = BoundPosition(currPos, nextPos);
 
-        if (CheckAllowedMove(player, newPos))
-        {
-            player.transform.position = newPos;
-        }
-        else
-        {
-            _velocity *= 0.5f;
-        }
+
+        _prevPos = currPos;
+        _runtimeData.playerPuddleVelocity = nextPos - _prevPos;
     }
 
-    private bool CheckAllowedMove(Player player, Vector3 pos)
+    private Vector3 BoundPosition(Vector3 currPos, Vector3 nextPos)
     {
-        var height = player.collider.height;
-        var p1 = pos + Vector3.left * (height * 0.5f);
-        var p2 = p1 + Vector3.right * height;
-
-        var radius = player.collider.radius;
-        var c1 = p1 + Vector3.right * radius;
-        var c2 = p2 - Vector3.right * radius;
-
-        return CheckCollision(Vector3.zero);
-
-        bool CheckCollision(Vector3 direction)
+        if (nextPos.x < -_runtimeData.boardExtents.x || nextPos.x > _runtimeData.boardExtents.x)
         {
-            var hitNumber = Physics.CapsuleCastNonAlloc(c1, c2, radius, Vector3.left, _hits, 0.02f);
-            if (hitNumber <= 0) return true;
-            for (var i = 0; i < hitNumber; i++)
-            {
-                if (_hits[i].collider.CompareTag(WallTag)) return false;
-            }
-
-            return true;
+            nextPos.x = currPos.x;
         }
+
+        if (nextPos.y < -_runtimeData.boardExtents.y || nextPos.y > _runtimeData.boardExtents.y)
+        {
+            nextPos.y = currPos.y;
+        }
+
+        return nextPos;
     }
 }

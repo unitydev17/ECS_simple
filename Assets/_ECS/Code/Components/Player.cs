@@ -3,5 +3,5 @@ using UnityEngine;
 public struct Player
 {
     public Transform transform;
-    public CapsuleCollider collider;
+    public CircleCollider2D collider;
 }

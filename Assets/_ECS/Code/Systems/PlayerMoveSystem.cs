@@ -7,7 +7,6 @@ public class PlayerMoveSystem : IEcsRunSystem
     private RuntimeData _runtimeData;
     private Camera _camera;
 
-
     public void Run()
     {
         foreach (var i in _filter)
@@ -21,19 +20,14 @@ public class PlayerMoveSystem : IEcsRunSystem
 
     private void PuddleMove(Player player, PlayerInputData input)
     {
-        var (tap, movePos) = input.moveInput;
+        var (tap, deltaMove) = input.moveInput;
         if (!tap) return;
 
-        var targetPos = _camera.ScreenToWorldPoint(movePos);
-        targetPos.z = 0;
-
         var currPos = player.transform.position;
+        var targetPos = currPos + deltaMove * Time.deltaTime;
+        var nextPos = BoundPosition(currPos, targetPos);
 
-
-        var nextPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * 100);
-        player.transform.position = BoundPosition(currPos, nextPos);
-
-
+        player.rigidbody.MovePosition(nextPos);
     }
 
     private Vector3 BoundPosition(Vector3 currPos, Vector3 nextPos)
@@ -43,7 +37,7 @@ public class PlayerMoveSystem : IEcsRunSystem
             nextPos.x = currPos.x;
         }
 
-        if (nextPos.y < -_runtimeData.boardExtents.y || nextPos.y > _runtimeData.boardExtents.y)
+        if (nextPos.y < -_runtimeData.boardExtents.y || nextPos.y > 0)
         {
             nextPos.y = currPos.y;
         }

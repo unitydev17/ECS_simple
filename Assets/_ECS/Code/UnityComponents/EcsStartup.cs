@@ -26,7 +26,7 @@ public class EcsStartup : MonoBehaviour
 
         _systems.Add(new PlayerInitSystem())
             .Add(new PlayerInputSystem())
-            .Add(new PlayerMoveByPhysicsSystem())
+            .Add(new PlayerMoveSystem())
             .Add(new BallSpawnSystem())
             .Add(new BallMovePhysicsSystem())
             .Add(new BotInitSystem())

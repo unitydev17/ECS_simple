@@ -15,9 +15,7 @@ public class BallMovePhysicsSystem : IEcsRunSystem
 
             RestrictVelocity(ref ball);
             // CheckCollisions(ref ball);
-            // UpdatePosition(ref ball);
-            // CheckBorders(ref ball);
-            // CheckMaxVelocity(ref ball);
+            CheckBorders(ref ball);
         }
     }
 
@@ -30,56 +28,36 @@ public class BallMovePhysicsSystem : IEcsRunSystem
         }
     }
 
-    private void CheckMaxVelocity(ref Ball ball)
-    {
-        ball.velocity = Vector3.ClampMagnitude(ball.velocity, 2);
-    }
 
     private void CheckBorders(ref Ball ball)
     {
         Vector2 ballPos = ball.transform.position;
-
-        var half = ball.collider.bounds.extents.x;
+        var half = 0;
 
         if (ballPos.x - half < -_runtimeData.boardExtents.x)
         {
             ballPos.x = half - _runtimeData.boardExtents.x;
-            ball.transform.position = ballPos;
-            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.right);
+            ball.rigidBody.MovePosition(ballPos);
         }
         else if (ballPos.x + half > _runtimeData.boardExtents.x)
         {
             ballPos.x = _runtimeData.boardExtents.x - half;
-            ball.transform.position = ballPos;
-            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.left);
+            ball.rigidBody.MovePosition(ballPos);
         }
 
 
         if (ballPos.y + half > _runtimeData.boardExtents.y)
         {
             ballPos.y = _runtimeData.boardExtents.y - half;
-            ball.transform.position = ballPos;
-            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.down);
+            ball.rigidBody.MovePosition(ballPos);
         }
         else if (ballPos.y - half < -_runtimeData.boardExtents.y)
         {
             ballPos.y = -_runtimeData.boardExtents.y + half;
-            ball.transform.position = ballPos;
-            ball.velocity = Vector3.Reflect(ball.velocity, Vector2.up);
+            ball.rigidBody.MovePosition(ballPos);
         }
-
-
-        //Debug.DrawLine(ballPos, (Vector3) ballPos + ball.velocity * 3, Color.white, 5);
     }
 
-
-    private static void UpdatePosition(ref Ball ball)
-    {
-        var pos = ball.transform.position;
-        pos += ball.velocity * (Time.deltaTime * 10);
-        ball.velocity *= 0.99f;
-        ball.transform.position = pos;
-    }
 
     // private void CheckCollisions(ref Ball ball)
     // {

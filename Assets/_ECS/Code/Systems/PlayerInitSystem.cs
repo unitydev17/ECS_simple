@@ -20,6 +20,7 @@ public class PlayerInitSystem : IEcsInitSystem
 
         player.transform = playerGo.transform;
         player.collider = playerGo.GetComponent<CapsuleCollider2D>();
+        player.rigidbody = playerGo.GetComponent<Rigidbody2D>();
 
     }
 }

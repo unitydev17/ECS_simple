@@ -20,19 +20,14 @@ public class PlayerMoveByPhysicsSystem : IEcsRunSystem
 
     private void PuddleMove(Player player, PlayerInputData input)
     {
-        var (tap, movePos) = input.moveInput;
+        var (tap, deltaMove) = input.moveInput;
         if (!tap) return;
 
-        var targetPos = _camera.ScreenToWorldPoint(movePos);
-        targetPos.z = 0;
-
         var currPos = player.transform.position;
+        var targetPos = currPos + deltaMove * Time.deltaTime;
+        var nextPos = BoundPosition(currPos, targetPos);
 
-
-        var nextPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * 100);
-        
-        player.collider.GetComponent<Rigidbody2D>().MovePosition(nextPos);
-
+        player.rigidbody.MovePosition(nextPos);
     }
 
     private Vector3 BoundPosition(Vector3 currPos, Vector3 nextPos)

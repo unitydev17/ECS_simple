@@ -4,6 +4,8 @@ public class BotMoveSystem : IEcsRunSystem
 {
     private EcsFilter<Bot> _filterBot;
     private EcsFilter<Ball> _filterBall;
+    private static float _deltaError;
+    private float _deltaTime;
 
     public void Run()
     {
@@ -15,6 +17,6 @@ public class BotMoveSystem : IEcsRunSystem
 
     private static void MoveBot(ref Bot bot, ref Ball ball)
     {
-        bot.transform.SetX(ball.transform.position.x);
+        bot.transform.SetX(ball.transform.position.x + _deltaError);
     }
 }

@@ -17,42 +17,23 @@ public class PlayerInputSystem : IEcsRunSystem
             ref var input = ref _filter.Get1(i);
 
 #if UNITY_EDITOR
-            input.moveInput = GetMousePos(ref input);
+            input.moveInput = GetMousePos();
 #else
-            input.moveInput = GetTouchPos(ref input);
+            input.moveInput = GetTouchPos();
 #endif
-            // _runtimeData.spawnBall = Input.GetKeyDown(KeyCode.Space);
-            // _runtimeData.runBall = Input.GetKeyDown(KeyCode.KeypadEnter);
         }
     }
 
-    private static (bool, Vector3) GetMousePos(ref PlayerInputData input)
+    private static (bool, Vector3) GetMousePos()
     {
-        var prevPos = input.moveInput.Item2;
-        
         var mouse = Mouse.current;
-        if (mouse == null) return (false, prevPos);
-
-        if (mouse.leftButton.IsPressed())
-        {
-            return (true, mouse.position.ReadValue());
-        }
-
-        return (false, prevPos);
+        if (mouse == null || !mouse.leftButton.IsPressed()) return (false, Vector2.zero);
+        return (true, mouse.delta.ReadValue() * 3);
     }
 
-    private static (bool, Vector3) GetTouchPos(ref PlayerInputData input)
+    private static (bool, Vector3) GetTouchPos()
     {
-        var prevPos = input.moveInput.Item2;
-        
         var touch = Touchscreen.current;
-        if (touch == null) return (false, prevPos);
-
-        if (touch.touches.Count > 0)
-        {
-            return (true, touch.position.ReadValue());
-        }
-
-        return (false, prevPos);
+        return touch == null || touch.touches.Count == 0 ? (false, Vector2.zero) : (true, touch.delta.ReadValue());
     }
 }

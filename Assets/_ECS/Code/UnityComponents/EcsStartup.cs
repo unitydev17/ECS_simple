@@ -7,6 +7,11 @@ public class EcsStartup : MonoBehaviour
     public SceneData sceneData;
     public new Camera camera;
 
+    public Transform _leftBorder;
+    public Transform _rightBorder;
+    public Transform _topBorder;
+    public Transform _bottomBorder;
+
     private EcsWorld _ecsWorld;
     private EcsSystems _systems;
 
@@ -22,14 +27,10 @@ public class EcsStartup : MonoBehaviour
         _systems.Add(new PlayerInitSystem())
             .Add(new PlayerInputSystem())
             .Add(new PlayerMoveByPhysicsSystem())
-            
             .Add(new BallSpawnSystem())
             .Add(new BallMovePhysicsSystem())
-            
             .Add(new BotInitSystem())
             .Add(new BotMoveSystem())
-            
-
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(camera)
@@ -37,6 +38,15 @@ public class EcsStartup : MonoBehaviour
             .Init();
 
         runtimeData.boardExtents = CountBoardExtents();
+        AlignBoardColliders(runtimeData.boardExtents);
+    }
+
+    private void AlignBoardColliders(Vector2 extents)
+    {
+        _leftBorder.SetX(-extents.x);
+        _rightBorder.SetX(extents.x);
+        _topBorder.SetY(extents.y);
+        _bottomBorder.SetY(-extents.y);
     }
 
     private Vector2 CountBoardExtents()

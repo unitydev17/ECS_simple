@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class UI : MonoBehaviour
 {
@@ -14,10 +13,10 @@ public class UI : MonoBehaviour
         _callback?.Invoke();
     }
 
-    public void OpenScore(Action closeCallback)
+    public void OpenScore(Vector2Int score, Action closeCallback)
     {
         _callback = closeCallback;
-        _scoreCanvas.SetScore(Random.Range(1, 9), Random.Range(1, 9));
+        _scoreCanvas.SetScore(score.x, score.y);
         _scoreCanvas.gameObject.SetActive(true);
     }
 }

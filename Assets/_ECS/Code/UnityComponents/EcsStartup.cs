@@ -12,9 +12,6 @@ public class EcsStartup : MonoBehaviour
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
-
-
         _ecsWorld = new EcsWorld();
         _systems = new EcsSystems(_ecsWorld);
         _runtimeData = new RuntimeData();
@@ -28,6 +25,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new BotMoveSystem())
             .Add(new GoalSystem())
             .Add(new RestartSystem())
+            .Add(new ViewPortSystem())
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)
@@ -35,27 +33,8 @@ public class EcsStartup : MonoBehaviour
             .Inject(_runtimeData)
             .Inject(sceneData.ui)
             .Init();
-
-        _runtimeData.boardExtents = CountBoardExtents();
-        SetBoardColliders(_runtimeData.boardExtents);
     }
 
-    private void SetBoardColliders(Vector2 extents)
-    {
-        sceneData.leftBorder.SetX(-extents.x);
-        sceneData.rightBorder.SetX(extents.x);
-        sceneData.topBorder.SetY(extents.y);
-        sceneData.bottomBorder.SetY(-extents.y);
-        
-        sceneData.botGoal.SetY(extents.y);
-        sceneData.playerGoal.SetY(-extents.y);
-    }
-
-    private Vector2 CountBoardExtents()
-    {
-        var topRightPos = sceneData.camera.ViewportToWorldPoint(new Vector2(1, 1));
-        return new Vector2(topRightPos.x, topRightPos.y);
-    }
 
     private void Update()
     {

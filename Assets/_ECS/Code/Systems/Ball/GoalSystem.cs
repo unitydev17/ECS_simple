@@ -32,6 +32,7 @@ public class GoalSystem : IEcsRunSystem
                 if (collider.IsTouchingLayers(BotGoalLayer))
                 {
                     _runtimeData.botMissed = true;
+                    _runtimeData.score.x++;
 
                     OpenUI();
                     break;
@@ -40,6 +41,7 @@ public class GoalSystem : IEcsRunSystem
                 if (collider.IsTouchingLayers(PlayerGoalLayer))
                 {
                     _runtimeData.botMissed = false;
+                    _runtimeData.score.y++;
 
                     OpenUI();
                     break;
@@ -51,6 +53,11 @@ public class GoalSystem : IEcsRunSystem
     private void OpenUI()
     {
         _runtimeData.goal = true;
-        _ui.OpenScore(() => _runtimeData.restartRequired = true);
+        _ui.OpenScore(_runtimeData.score, CloseCallback);
+    }
+
+    private void CloseCallback()
+    {
+        _runtimeData.restartRequired = true;
     }
 }

@@ -12,6 +12,8 @@ public class PlayerInputSystem : IEcsRunSystem
 
     public void Run()
     {
+        if (_runtimeData.goal) return;
+        
         foreach (var i in _filter)
         {
             ref var input = ref _filter.Get1(i);

@@ -13,6 +13,7 @@ public class BotMoveSystem : IEcsRunSystem
     private EcsFilter<Bot> _filterBot;
     private EcsFilter<Ball> _filterBall;
     private SceneData _sceneData;
+    private RuntimeData _runtimeData;
 
     private State _state = State.Follow;
     private Vector2 _targetBall;
@@ -20,8 +21,11 @@ public class BotMoveSystem : IEcsRunSystem
     private float _deltaTimeTarget;
     private float _startPunchY;
 
+
     public void Run()
     {
+        if (_runtimeData.goal) return;
+
         ref var bot = ref _filterBot.Get1(0);
         ref var ball = ref _filterBall.Get1(0);
 

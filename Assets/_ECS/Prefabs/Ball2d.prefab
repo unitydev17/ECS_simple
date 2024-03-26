@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 8526515945378998883}
   - component: {fileID: 6361925075586288869}
   - component: {fileID: 6772994086116538092}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball2d
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,7 +7,6 @@ public class BallSpawnSystem : IEcsRunSystem
 
     private StaticData _config;
 
-    // private EcsFilter<Ball> _filter;
     private EcsWorld _ecsWorld;
 
     public void Run()
@@ -23,17 +22,8 @@ public class BallSpawnSystem : IEcsRunSystem
         ball.velocity = Vector3.zero;
         ball.collider = ballGo.GetComponent<CircleCollider2D>();
         ball.rigidBody = ballGo.GetComponent<Rigidbody2D>();
+        ball.trailRenderer = ballGo.GetComponentInChildren<TrailRenderer>();
 
         _runtimeData.spawnBall = true;
-        
-        
-        // foreach (var i in _filter)
-        // {
-        //     var ball = _filter.Get1(i);
-        //     var ballGo = Object.Instantiate(_config.ballPrefab);
-        //     ball.transform = ballGo.transform;
-        //     ball.direction = Vector3.up;
-        //     ball.collider = ballGo.GetComponent<SphereCollider>();
-        // }
     }
 }

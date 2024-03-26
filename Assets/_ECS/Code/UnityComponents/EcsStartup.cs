@@ -5,15 +5,10 @@ public class EcsStartup : MonoBehaviour
 {
     public StaticData configuration;
     public SceneData sceneData;
-    public new Camera camera;
-
-    public Transform _leftBorder;
-    public Transform _rightBorder;
-    public Transform _topBorder;
-    public Transform _bottomBorder;
 
     private EcsWorld _ecsWorld;
     private EcsSystems _systems;
+    private RuntimeData _runtimeData;
 
     private void Start()
     {
@@ -22,7 +17,7 @@ public class EcsStartup : MonoBehaviour
 
         _ecsWorld = new EcsWorld();
         _systems = new EcsSystems(_ecsWorld);
-        var runtimeData = new RuntimeData();
+        _runtimeData = new RuntimeData();
 
         _systems.Add(new PlayerInitSystem())
             .Add(new PlayerInputSystem())
@@ -31,27 +26,34 @@ public class EcsStartup : MonoBehaviour
             .Add(new BallMovePhysicsSystem())
             .Add(new BotInitSystem())
             .Add(new BotMoveSystem())
+            .Add(new GoalSystem())
+            .Add(new RestartSystem())
             .Inject(configuration)
             .Inject(sceneData)
-            .Inject(camera)
-            .Inject(runtimeData)
+            .Inject(sceneData.camera)
+            .Inject(_systems)
+            .Inject(_runtimeData)
+            .Inject(sceneData.ui)
             .Init();
 
-        runtimeData.boardExtents = CountBoardExtents();
-        AlignBoardColliders(runtimeData.boardExtents);
+        _runtimeData.boardExtents = CountBoardExtents();
+        SetBoardColliders(_runtimeData.boardExtents);
     }
 
-    private void AlignBoardColliders(Vector2 extents)
+    private void SetBoardColliders(Vector2 extents)
     {
-        _leftBorder.SetX(-extents.x);
-        _rightBorder.SetX(extents.x);
-        _topBorder.SetY(extents.y);
-        _bottomBorder.SetY(-extents.y);
+        sceneData.leftBorder.SetX(-extents.x);
+        sceneData.rightBorder.SetX(extents.x);
+        sceneData.topBorder.SetY(extents.y);
+        sceneData.bottomBorder.SetY(-extents.y);
+        
+        sceneData.botGoal.SetY(extents.y);
+        sceneData.playerGoal.SetY(-extents.y);
     }
 
     private Vector2 CountBoardExtents()
     {
-        var topRightPos = camera.ViewportToWorldPoint(new Vector2(1, 1));
+        var topRightPos = sceneData.camera.ViewportToWorldPoint(new Vector2(1, 1));
         return new Vector2(topRightPos.x, topRightPos.y);
     }
 

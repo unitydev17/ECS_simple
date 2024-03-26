@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct Player
+public struct Bot
 {
     public Transform transform;
     public CapsuleCollider2D collider;

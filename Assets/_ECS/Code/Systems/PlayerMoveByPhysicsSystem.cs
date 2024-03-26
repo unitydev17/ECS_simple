@@ -1,12 +1,11 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class PlayerMoveSystem : IEcsRunSystem
+public class PlayerMoveByPhysicsSystem : IEcsRunSystem
 {
     private EcsFilter<Player, PlayerInputData> _filter;
     private RuntimeData _runtimeData;
     private Camera _camera;
-
 
     public void Run()
     {
@@ -31,8 +30,8 @@ public class PlayerMoveSystem : IEcsRunSystem
 
 
         var nextPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * 100);
-        player.transform.position = BoundPosition(currPos, nextPos);
-
+        
+        player.collider.GetComponent<Rigidbody2D>().MovePosition(nextPos);
 
     }
 

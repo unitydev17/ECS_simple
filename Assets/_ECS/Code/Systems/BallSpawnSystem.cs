@@ -22,6 +22,7 @@ public class BallSpawnSystem : IEcsRunSystem
         ball.transform = ballGo.transform;
         ball.velocity = Vector3.zero;
         ball.collider = ballGo.GetComponent<CircleCollider2D>();
+        ball.rigidBody = ballGo.GetComponent<Rigidbody2D>();
 
         _runtimeData.spawnBall = true;
         

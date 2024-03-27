@@ -40,7 +40,7 @@ public class BotMoveSystem : IEcsRunSystem
     {
         if (_state == State.Attack)
         {
-            _targetBall.y = ball.transform.position.y + ball.collider.bounds.extents.y * 0.25f;
+            _targetBall.y = ball.transform.position.y + ball.collider.bounds.extents.y * 0.5f;
         }
     }
 
@@ -51,7 +51,7 @@ public class BotMoveSystem : IEcsRunSystem
 
         var isBallOnBotSide = ballPos.y > 0;
         var isBallSlowsDown = ball.velocity.magnitude < 1;
-        var isBallCloseToBot = Vector2.Distance(ballPos, bot.transform.position) < 5f;
+        var isBallCloseToBot = Vector2.Distance(ballPos, bot.transform.position) < 10f;
 
         if (isBallOnBotSide && (isBallSlowsDown || isBallCloseToBot))
         {

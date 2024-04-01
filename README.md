@@ -119,9 +119,7 @@ public class PlayerInputSystem : IEcsRunSystem
 
 ```
 
-```C#
 пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
-```
 
 ```C#
         foreach (var i in _filter)

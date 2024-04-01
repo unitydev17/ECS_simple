@@ -53,7 +53,6 @@ public class PlayerInitSystem : IEcsInitSystem
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
     private SceneData _sceneData;
-    private RuntimeData _runtimeData;
 
     public void Init()
     {
@@ -72,7 +71,7 @@ public class PlayerInitSystem : IEcsInitSystem
 ```
 
 ## PlayerInitSystem.cs
-Пример системы выполнения - считывание данных ввода игрока (мышь для unity editor, Touch для android)
+Пример системы выполнения - считывание данных ввода игрока в Update (мышь для unity editor, Touch для android)
 ```C#
 public class PlayerInputSystem : IEcsRunSystem
 {
@@ -85,6 +84,9 @@ public class PlayerInputSystem : IEcsRunSystem
 
     public void Run()
     {
+```
+игнорируем ввод пользователя если был забит гол
+```C#
         if (_runtimeData.goal) return;
 
         foreach (var i in _filter)

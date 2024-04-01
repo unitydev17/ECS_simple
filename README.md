@@ -96,7 +96,7 @@ public class PlayerInputSystem : IEcsRunSystem
 {
     private RuntimeData _runtimeData;
 ```
-фильтр позволяет получить сущности и компоненты в этих сущностях
+фильтр EcsFilter<PlayerInputData> позволяет получить ссылки на сущности, которые содержат в себе компоненты PlayerInputData
 ```C#
     private EcsFilter<PlayerInputData> _filter;
     private EcsWorld _ecsWorld;
@@ -108,7 +108,7 @@ public class PlayerInputSystem : IEcsRunSystem
     {
         if (_runtimeData.goal) return;
 ```
-пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
+пробегаем по данным фильтра и достаем необходимые для этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
 ```C#
         foreach (var i in _filter)
         {

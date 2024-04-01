@@ -6,7 +6,7 @@
 
 ## ECSStartup.cs
 
-Содержит список систем игры
+$${\color{lightgreen}Содержит список систем игры \space Green}$$
 
 ```C#
     private void Start()

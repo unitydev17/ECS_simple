@@ -15,3 +15,6 @@ MonoBehaviour:
   puddlePrefab: {fileID: 7182733545205749901, guid: 0ec96ceb72d7e4a3aa8a6e94bba7d1f6, type: 3}
   ballPrefab: {fileID: 8526515945378998880, guid: 0a4d7696020604484aacb3b1b47b7b62, type: 3}
   maxBallVelocity: 50
+  botMoveVelocity: 8
+  botAttackDistance: 10
+  mouseSpeedMagnifier: 3

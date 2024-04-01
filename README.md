@@ -6,8 +6,7 @@
 
 ## ECSStartup.cs
 
-<code style="color : Yellowgreen">Содержит список систем игры</code>
-
+<code>Содержит список систем игры</code>
 
 ```C#
     private void Start()
@@ -29,9 +28,7 @@
             .Add(new DelaySpawnSystem())
             .Add(new DelayActionSystem())
 ```
-```diff
-+ а также объектов для инъекции в эти же системы
-```
+<code>а также объектов для инъекции в эти же системы</code>
 ```C#
             .Inject(configuration)
             .Inject(sceneData)

@@ -2,13 +2,12 @@
 
 ### Тестовое приложение с использованием ECS архитектуры и фреймворка [LEO-ECS](https://github.com/Leopotam/ecs)
 
-![Onion architecture](/Assets/_Project/Images/readme/ecs_game.png)
+![Ecs game](/Assets/_ECS/Images/readme/ecs_game.png)
 
 ## ECSStartup.cs
 
-```diff
-+ Содержит список систем игры
-```
+<code style="color : Yellowgreen">Содержит список систем игры</code>
+
 
 ```C#
     private void Start()

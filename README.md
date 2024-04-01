@@ -54,8 +54,6 @@ public class PlayerInitSystem : IEcsInitSystem
 <code>статические данные StaticData - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры</code>
 ```C#
     private StaticData _staticData;
-```
-```C#
     private SceneData _sceneData;
 
     public void Init()
@@ -67,8 +65,6 @@ public class PlayerInitSystem : IEcsInitSystem
 <code>в сущность playerEntity добавляется компонент PlayerInputData, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока</code>
 ```C#
         playerEntity.Get<PlayerInputData>();
-```
-```C#
 
         var playerGo = Object.Instantiate(_staticData.puddlePrefab);
         playerGo.transform.position = _sceneData.puddleSpawnPoint.position;
@@ -103,8 +99,6 @@ public class PlayerInputSystem : IEcsRunSystem
 <code>фильтр позволяет получить сущности и компоненты на этих сущностях</code>
 ```C#
     private EcsFilter<PlayerInputData> _filter;
-```
-```C#
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
 

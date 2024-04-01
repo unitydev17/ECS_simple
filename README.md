@@ -28,7 +28,7 @@
             .Add(new DelaySpawnSystem())
             .Add(new DelayActionSystem())
 ```
-<code>а также объектов для инъекции в эти же системы</code>
+а также объектов для инъекции в эти же системы
 ```C#
             .Inject(configuration)
             .Inject(sceneData)
@@ -51,7 +51,7 @@ public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 ```
-<code>статические данные StaticData - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры</code>
+статические данные StaticData - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры
 ```C#
     private StaticData _staticData;
     private SceneData _sceneData;
@@ -62,7 +62,7 @@ public class PlayerInitSystem : IEcsInitSystem
         ref var player = ref playerEntity.Get<Player>();
 
 ```
-<code>в сущность playerEntity добавляется компонент PlayerInputData, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока</code>
+в сущность playerEntity добавляется компонент PlayerInputData, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
 ```C#
         playerEntity.Get<PlayerInputData>();
 
@@ -96,7 +96,7 @@ public class PlayerInputSystem : IEcsRunSystem
 {
     private RuntimeData _runtimeData;
 ```
-<code>фильтр позволяет получить сущности и компоненты на этих сущностях</code>
+фильтр позволяет получить сущности и компоненты в этих сущностях
 ```C#
     private EcsFilter<PlayerInputData> _filter;
     private EcsWorld _ecsWorld;
@@ -106,13 +106,9 @@ public class PlayerInputSystem : IEcsRunSystem
 
     public void Run()
     {
-```
-<code>игнорируем ввод пользователя если был забит гол</code>
-```C#
         if (_runtimeData.goal) return;
-
 ```
-<code>пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)</code>
+пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
 ```C#
         foreach (var i in _filter)
         {
@@ -155,6 +151,9 @@ public class PlayerMoveSystem : IEcsRunSystem
 
     public void Run()
     {
+```
+игнорируем ввод пользователя если был забит гол
+```C#
         if (_runtimeData.goal) return;
 
         foreach (var i in _filter)

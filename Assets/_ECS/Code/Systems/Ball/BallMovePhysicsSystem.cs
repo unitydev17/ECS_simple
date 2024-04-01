@@ -37,27 +37,27 @@ public class BallMovePhysicsSystem : IEcsRunSystem
     private void CheckBorders(ref Ball ball)
     {
         Vector2 ballPos = ball.transform.position;
-        var half = 0;
+        
 
-        if (ballPos.x - half < -_runtimeData.boardExtents.x)
+        if (ballPos.x - ball.half < -_runtimeData.boardExtents.x)
         {
-            ballPos.x = half - _runtimeData.boardExtents.x;
+            ballPos.x = ball.half - _runtimeData.boardExtents.x;
             ball.rigidBody.MovePositionForced(ballPos);
         }
-        else if (ballPos.x + half > _runtimeData.boardExtents.x)
+        else if (ballPos.x + ball.half > _runtimeData.boardExtents.x)
         {
-            ballPos.x = _runtimeData.boardExtents.x - half;
+            ballPos.x = _runtimeData.boardExtents.x - ball.half;
             ball.rigidBody.MovePositionForced(ballPos);
         }
 
-        if (ballPos.y + half > _runtimeData.boardExtents.y)
+        if (ballPos.y + ball.half > _runtimeData.boardExtents.y)
         {
-            ballPos.y = _runtimeData.boardExtents.y - half;
+            ballPos.y = _runtimeData.boardExtents.y - ball.half;
             ball.rigidBody.MovePositionForced(ballPos);
         }
-        else if (ballPos.y - half < -_runtimeData.boardExtents.y)
+        else if (ballPos.y - ball.half < -_runtimeData.boardExtents.y)
         {
-            ballPos.y = -_runtimeData.boardExtents.y + half;
+            ballPos.y = -_runtimeData.boardExtents.y + ball.half;
             ball.rigidBody.MovePositionForced(ballPos);
         }
     }

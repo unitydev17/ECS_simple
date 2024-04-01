@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 public class RestartSystem : IEcsRunSystem
 {

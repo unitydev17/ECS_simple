@@ -23,6 +23,7 @@ public class BallSpawnSystem : IEcsRunSystem
         ball.collider = ballGo.GetComponent<CircleCollider2D>();
         ball.rigidBody = ballGo.GetComponent<Rigidbody2D>();
         ball.trailRenderer = ballGo.GetComponentInChildren<TrailRenderer>();
+        ball.half = ball.collider.bounds.extents.x * 0.5f;
 
         _runtimeData.spawnBall = true;
     }

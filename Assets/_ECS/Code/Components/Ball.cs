@@ -7,5 +7,6 @@ public struct Ball
     public CircleCollider2D collider;
     public Rigidbody2D rigidBody;
     public TrailRenderer trailRenderer;
+    public float half;
 
 }

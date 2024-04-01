@@ -8,4 +8,5 @@ public class StaticData : ScriptableObject
     public float maxBallVelocity;
     public float botMoveVelocity;
     public double botAttackDistance;
+    public float mouseSpeedMagnifier;
 }

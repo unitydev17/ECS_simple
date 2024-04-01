@@ -33,7 +33,6 @@
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)
-            .Inject(_systems)
             .Inject(_runtimeData)
             .Inject(sceneData.ui)
             .Init();
@@ -51,7 +50,12 @@
 public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
+```
+Статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры
+```C#
     private StaticData _staticData;
+```
+```C#
     private SceneData _sceneData;
 
     public void Init()

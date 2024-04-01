@@ -7,7 +7,6 @@ public class PlayerInitSystem : IEcsInitSystem
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
     private SceneData _sceneData;
-    private RuntimeData _runtimeData;
 
     public void Init()
     {

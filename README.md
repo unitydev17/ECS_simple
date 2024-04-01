@@ -6,7 +6,7 @@
 
 ## ECSStartup.cs
 
-<code>Содержит список систем игры</code>
+Содержит список систем игры
 
 ```C#
     private void Start()
@@ -44,18 +44,14 @@
 
 ## PlayerInitSystem.cs
 
-```diff
-+ Пример системы инициализации - инициализация игрока. Выполняется один раз при старте игры.
-```
+Пример системы инициализации - инициализация игрока. Выполняется один раз при старте игры
 
 ```C#
 public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 ```
-```diff
-+ статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры
-```
+<code>статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры</code>
 ```C#
     private StaticData _staticData;
 ```
@@ -68,9 +64,7 @@ public class PlayerInitSystem : IEcsInitSystem
         ref var player = ref playerEntity.Get<Player>();
 
 ```
-```diff
-+ добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
-```
+<code>добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока</code>
 ```C#
         playerEntity.Get<PlayerInputData>();
 ```
@@ -106,7 +100,7 @@ public class PlayerInputSystem : IEcsRunSystem
 {
     private RuntimeData _runtimeData;
 ```
-фильтр позволяет получить сущности и компоненты на этих сущностях
+<code>фильтр позволяет получить сущности и компоненты на этих сущностях</code>
 ```C#
     private EcsFilter<PlayerInputData> _filter;
 ```
@@ -119,14 +113,12 @@ public class PlayerInputSystem : IEcsRunSystem
     public void Run()
     {
 ```
-игнорируем ввод пользователя если был забит гол
+<code>игнорируем ввод пользователя если был забит гол</code>
 ```C#
         if (_runtimeData.goal) return;
 
 ```
-
-пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
-
+<code>пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)</code>
 ```C#
         foreach (var i in _filter)
         {

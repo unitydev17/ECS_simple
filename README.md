@@ -58,7 +58,13 @@ public class PlayerInitSystem : IEcsInitSystem
     {
         var playerEntity = _ecsWorld.NewEntity();
         ref var player = ref playerEntity.Get<Player>();
+
+```
+Добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
+```C#
         playerEntity.Get<PlayerInputData>();
+```
+```C#
 
         var playerGo = Object.Instantiate(_staticData.puddlePrefab);
         playerGo.transform.position = _sceneData.puddleSpawnPoint.position;
@@ -76,7 +82,12 @@ public class PlayerInitSystem : IEcsInitSystem
 public class PlayerInputSystem : IEcsRunSystem
 {
     private RuntimeData _runtimeData;
+```
+Фильтр позволяет получить сущности и компоненты на этих сущностях
+```C#
     private EcsFilter<PlayerInputData> _filter;
+```
+```C#
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
 
@@ -92,7 +103,10 @@ public class PlayerInputSystem : IEcsRunSystem
 ```
 
 ```C#
+пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
+```
 
+```C#
         foreach (var i in _filter)
         {
             ref var input = ref _filter.Get1(i);

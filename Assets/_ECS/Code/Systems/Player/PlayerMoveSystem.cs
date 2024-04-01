@@ -5,7 +5,6 @@ public class PlayerMoveSystem : IEcsRunSystem
 {
     private EcsFilter<Player, PlayerInputData> _filter;
     private RuntimeData _runtimeData;
-    private Camera _camera;
 
     public void Run()
     {

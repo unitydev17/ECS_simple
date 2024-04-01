@@ -12,13 +12,11 @@ public class DelayActionSystem : IEcsRunSystem
         {
             ref var delay = ref _filter.Get1(i);
 
-            if (!delay.active) continue;
-
             delay.count += Time.deltaTime;
             if (delay.count < delay.delay) continue;
 
-            delay.active = false;
             delay.delayedAction?.Invoke();
+            _filter.GetEntity(i).Del<Delay>();
         }
     }
 }

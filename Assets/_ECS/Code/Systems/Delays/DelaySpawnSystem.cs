@@ -15,6 +15,5 @@ public class DelaySpawnSystem : IEcsRunSystem
         var incomeDelay = _runtimeData.delays.Dequeue();
         delay.delay = incomeDelay.delay;
         delay.delayedAction = incomeDelay.delayedAction;
-        delay.active = true;
     }
 }

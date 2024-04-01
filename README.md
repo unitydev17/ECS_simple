@@ -1,10 +1,12 @@
 # ECS simple test game
 
-### Тестовое приложение с использованием ECS архитектуры и фреймвока LEO-ECS
+### Тестовое приложение с использованием ECS архитектуры и фреймворка [LEO-ECS](https://github.com/Leopotam/ecs)
 
 ![Onion architecture](/Assets/_Project/Images/readme/ecs_game.png)
 
 ## ECSStartup.cs
+
+Содержит список систем приложения.
 
 ```C#
     private void Start()
@@ -25,6 +27,9 @@
             .Add(new ViewPortSystem())
             .Add(new DelaySpawnSystem())
             .Add(new DelayActionSystem())
+```
+а также объектов для инъекции в эти же системы
+```C#
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)

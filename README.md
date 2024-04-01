@@ -51,7 +51,7 @@ public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 ```
-<code>статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры</code>
+<code>статические данные StaticData - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры</code>
 ```C#
     private StaticData _staticData;
 ```
@@ -64,7 +64,7 @@ public class PlayerInitSystem : IEcsInitSystem
         ref var player = ref playerEntity.Get<Player>();
 
 ```
-<code>добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока</code>
+<code>в сущность playerEntity добавляется компонент PlayerInputData, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока</code>
 ```C#
         playerEntity.Get<PlayerInputData>();
 ```

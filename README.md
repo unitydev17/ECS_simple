@@ -6,7 +6,7 @@
 
 ## ECSStartup.cs
 
-```
+```C#
     private void Start()
     {
         _ecsWorld = new EcsWorld();

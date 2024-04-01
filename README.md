@@ -89,6 +89,10 @@ public class PlayerInputSystem : IEcsRunSystem
 ```C#
         if (_runtimeData.goal) return;
 
+```
+
+```C#
+
         foreach (var i in _filter)
         {
             ref var input = ref _filter.Get1(i);

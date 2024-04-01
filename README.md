@@ -6,7 +6,9 @@
 
 ## ECSStartup.cs
 
-$${\color{lightgreen}Содержит список систем игры \space Green}$$
+```diff
++ Содержит список систем игры
+```
 
 ```C#
     private void Start()

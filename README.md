@@ -2,11 +2,12 @@
 
 ### Тестовое приложение с использованием ECS архитектуры и фреймворка [LEO-ECS](https://github.com/Leopotam/ecs)
 
-![Onion architecture](/Assets/_Project/Images/readme/ecs_game.png)
+![Ecs game](/Assets/_ECS/Images/readme/ecs_game.png)
 
 ## ECSStartup.cs
 
-Содержит список систем игры
+<code style="color : Yellowgreen">Содержит список систем игры</code>
+
 
 ```C#
     private void Start()
@@ -28,12 +29,13 @@
             .Add(new DelaySpawnSystem())
             .Add(new DelayActionSystem())
 ```
-а также объектов для инъекции в эти же системы
+```diff
++ а также объектов для инъекции в эти же системы
+```
 ```C#
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)
-            .Inject(_systems)
             .Inject(_runtimeData)
             .Inject(sceneData.ui)
             .Init();
@@ -45,13 +47,22 @@
 
 ## PlayerInitSystem.cs
 
-Пример системы инициализации - инициализация игрока. Выполняется один раз при старте игры.
+```diff
++ Пример системы инициализации - инициализация игрока. Выполняется один раз при старте игры.
+```
 
 ```C#
 public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
+```
+```diff
++ статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры
+```
+```C#
     private StaticData _staticData;
+```
+```C#
     private SceneData _sceneData;
 
     public void Init()
@@ -60,7 +71,9 @@ public class PlayerInitSystem : IEcsInitSystem
         ref var player = ref playerEntity.Get<Player>();
 
 ```
-Добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
+```diff
++ добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
+```
 ```C#
         playerEntity.Get<PlayerInputData>();
 ```
@@ -96,7 +109,7 @@ public class PlayerInputSystem : IEcsRunSystem
 {
     private RuntimeData _runtimeData;
 ```
-Фильтр позволяет получить сущности и компоненты на этих сущностях
+фильтр позволяет получить сущности и компоненты на этих сущностях
 ```C#
     private EcsFilter<PlayerInputData> _filter;
 ```
@@ -115,9 +128,7 @@ public class PlayerInputSystem : IEcsRunSystem
 
 ```
 
-```C#
 пробегаем по сущностям фильтра и достаем нужные в этой системе компоненты, в данном случае - пользовательский ввод (PlayerInputData) и заполняем его данными (mouse, touch)
-```
 
 ```C#
         foreach (var i in _filter)

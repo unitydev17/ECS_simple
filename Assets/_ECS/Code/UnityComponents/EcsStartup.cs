@@ -26,6 +26,8 @@ public class EcsStartup : MonoBehaviour
             .Add(new GoalSystem())
             .Add(new RestartSystem())
             .Add(new ViewPortSystem())
+            .Add(new DelaySpawnSystem())
+            .Add(new DelayActionSystem())
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)

@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine;
 
 public class RestartSystem : IEcsRunSystem
 {
@@ -39,14 +40,17 @@ public class RestartSystem : IEcsRunSystem
             bot.transform.position = _sceneData.botSpawnPoint.position;
         }
     }
-    
+
     private void RestartBall()
     {
         foreach (var i in _filterBall)
         {
             ref var ball = ref _filterBall.Get1(i);
-            ball.transform.position = _sceneData.ballSpawnPoint.position;
-            ball.trailRenderer.Clear();
+            ball.trailRenderer.emitting = false;
+            ball.rigidBody.position = _sceneData.ballSpawnPoint.position;
+            var trail = ball.trailRenderer;
+
+            _runtimeData.DelayedCall(0.1f, () => trail.emitting = true);
         }
     }
 }

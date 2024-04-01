@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class BotInitSystem : IEcsInitSystem
@@ -18,6 +17,5 @@ public class BotInitSystem : IEcsInitSystem
         botGo.transform.position = _sceneData.botSpawnPoint.position;
 
         bot.transform = botGo.transform;
-        bot.collider = botGo.GetComponent<CapsuleCollider2D>();
     }
 }

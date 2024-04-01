@@ -19,8 +19,7 @@ public class PlayerInitSystem : IEcsInitSystem
         playerGo.transform.position = _sceneData.puddleSpawnPoint.position;
 
         player.transform = playerGo.transform;
-        player.collider = playerGo.GetComponent<CapsuleCollider2D>();
-        player.rigidbody = playerGo.GetComponent<Rigidbody2D>();
+        player.rigidBody = playerGo.GetComponent<Rigidbody2D>();
 
     }
 }

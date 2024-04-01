@@ -16,4 +16,5 @@ public class SceneData : MonoBehaviour
 
     public Transform botGoal;
     public Transform playerGoal;
+    
 }

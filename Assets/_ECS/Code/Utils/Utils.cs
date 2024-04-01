@@ -23,4 +23,11 @@ public static class Utils
         pos.y = y;
         tr.position = pos;
     }
+
+    public static void MovePositionForced(this Rigidbody2D rb, Vector3 pos)
+    {
+        rb.isKinematic = true;
+        rb.position = pos;
+        rb.isKinematic = false;
+    }
 }

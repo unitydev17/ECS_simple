@@ -9,6 +9,8 @@ public class PlayerMoveSystem : IEcsRunSystem
 
     public void Run()
     {
+        if (_runtimeData.goal) return;
+
         foreach (var i in _filter)
         {
             ref var player = ref _filter.Get1(i);
@@ -27,7 +29,7 @@ public class PlayerMoveSystem : IEcsRunSystem
         var targetPos = currPos + deltaMove * Time.deltaTime;
         var nextPos = BoundPosition(currPos, targetPos);
 
-        player.rigidbody.MovePosition(nextPos);
+        player.rigidBody.MovePosition(nextPos);
     }
 
     private Vector3 BoundPosition(Vector3 currPos, Vector3 nextPos)

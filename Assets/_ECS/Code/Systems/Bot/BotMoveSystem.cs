@@ -14,6 +14,7 @@ public class BotMoveSystem : IEcsRunSystem
     private EcsFilter<Ball> _filterBall;
     private SceneData _sceneData;
     private RuntimeData _runtimeData;
+    private StaticData _staticData;
 
     private State _state = State.Follow;
     private Vector2 _targetBall;
@@ -40,7 +41,7 @@ public class BotMoveSystem : IEcsRunSystem
     {
         if (_state == State.Attack)
         {
-            _targetBall.y = ball.transform.position.y + ball.collider.bounds.extents.y * 0.5f;
+            _targetBall.y = ball.transform.position.y + ball.collider.bounds.extents.y;
         }
     }
 
@@ -51,7 +52,7 @@ public class BotMoveSystem : IEcsRunSystem
 
         var isBallOnBotSide = ballPos.y > 0;
         var isBallSlowsDown = ball.velocity.magnitude < 1;
-        var isBallCloseToBot = Vector2.Distance(ballPos, bot.transform.position) < 10f;
+        var isBallCloseToBot = Vector2.Distance(ballPos, bot.transform.position) < _staticData.botAttackDistance;
 
         if (isBallOnBotSide && (isBallSlowsDown || isBallCloseToBot))
         {
@@ -92,7 +93,7 @@ public class BotMoveSystem : IEcsRunSystem
         var fromY = currPos.y;
         if (_state == State.Attack) fromY = _startPunchY;
 
-        var nextPosY = Mathf.Lerp(fromY, _targetBall.y, Time.deltaTime * 10);
+        var nextPosY = Mathf.Lerp(fromY, _targetBall.y, Time.deltaTime * _staticData.botMoveVelocity);
         return nextPosY;
     }
 
@@ -101,7 +102,7 @@ public class BotMoveSystem : IEcsRunSystem
         var toX = _targetBall.x;
         if (_state == State.Attack) toX += Random.value - 1f;
 
-        var nextPosX = Mathf.Lerp(currPos.x, toX, Time.deltaTime * 5);
+        var nextPosX = Mathf.Lerp(currPos.x, toX, Time.deltaTime * _staticData.botMoveVelocity);
         return nextPosX;
     }
 }

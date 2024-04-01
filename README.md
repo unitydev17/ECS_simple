@@ -30,7 +30,9 @@
             .Add(new DelaySpawnSystem())
             .Add(new DelayActionSystem())
 ```
+```diff
 а также объектов для инъекции в эти же системы
+```
 ```C#
             .Inject(configuration)
             .Inject(sceneData)
@@ -46,14 +48,18 @@
 
 ## PlayerInitSystem.cs
 
+```diff
 Пример системы инициализации - инициализация игрока. Выполняется один раз при старте игры.
+```
 
 ```C#
 public class PlayerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 ```
+```diff
 статические данные - пример инъекции в систему. Это Scriptable object с общей конфигурацией игры
+```
 ```C#
     private StaticData _staticData;
 ```
@@ -66,7 +72,9 @@ public class PlayerInitSystem : IEcsInitSystem
         ref var player = ref playerEntity.Get<Player>();
 
 ```
+```diff
 добавляется компонент PlayerInputData на сущность playerEntity, в дальнейшем этот компонент будет использоваться для передачи данных пользовательского ввода в систему передвижения биты игрока
+```
 ```C#
         playerEntity.Get<PlayerInputData>();
 ```

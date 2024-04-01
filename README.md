@@ -70,7 +70,7 @@ public class PlayerInitSystem : IEcsInitSystem
 }
 ```
 
-## PlayerInitSystem.cs
+## PlayerInputSystem.cs
 Пример системы выполнения - считывание данных ввода игрока в Update (мышь для unity editor, Touch для android)
 ```C#
 public class PlayerInputSystem : IEcsRunSystem
@@ -119,3 +119,67 @@ public class PlayerInputSystem : IEcsRunSystem
     }
 }
 ```
+
+## PlayerInputData.cs
+Компонент, который содержит в себе данные о вводе пользователя, используются для передвижения ракетки, bool значение указывает есть ли вообще движение
+```C#
+public struct PlayerInputData
+{
+    public (bool, Vector3) moveInput;
+}
+```
+
+
+## PlayerMovetData.cs
+Система управления передвижением биты на основании PlayerInputData компонента
+```C#
+
+public class PlayerMoveSystem : IEcsRunSystem
+{
+    private EcsFilter<Player, PlayerInputData> _filter;
+    private RuntimeData _runtimeData;
+    private Camera _camera;
+
+    public void Run()
+    {
+        if (_runtimeData.goal) return;
+
+        foreach (var i in _filter)
+        {
+            ref var player = ref _filter.Get1(i);
+            ref var input = ref _filter.Get2(i);
+
+            PuddleMove(player, input);
+        }
+    }
+
+    private void PuddleMove(Player player, PlayerInputData input)
+    {
+        var (tap, deltaMove) = input.moveInput;
+        if (!tap) return;
+
+        var currPos = player.transform.position;
+        var targetPos = currPos + deltaMove * Time.deltaTime;
+        var nextPos = BoundPosition(currPos, targetPos);
+
+        player.rigidBody.MovePosition(nextPos);
+    }
+
+    private Vector3 BoundPosition(Vector3 currPos, Vector3 nextPos)
+    {
+        if (nextPos.x < -_runtimeData.boardExtents.x || nextPos.x > _runtimeData.boardExtents.x)
+        {
+            nextPos.x = currPos.x;
+        }
+
+        if (nextPos.y < -_runtimeData.boardExtents.y || nextPos.y > 0)
+        {
+            nextPos.y = currPos.y;
+        }
+
+        return nextPos;
+    }
+}
+```
+
+

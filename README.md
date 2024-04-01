@@ -2,7 +2,7 @@
 
 ### Тестовое приложение с использованием ECS архитектуры и фреймворка [LEO-ECS](https://github.com/Leopotam/ecs)
 
-![Ecs game](/Assets/_ECS/Images/readme/ecs_game.png)![Ecs game](/Assets/_ECS/Images/readme/ecs_game.png)
+![Ecs game](/Assets/_ECS/Images/readme/ecs_game.png) ![Ecs game](/Assets/_ECS/Images/readme/ecs_game2.png)
 
 ## ECSStartup.cs
 

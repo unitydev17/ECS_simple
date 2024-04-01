@@ -76,6 +76,19 @@ public class PlayerInitSystem : IEcsInitSystem
 }
 ```
 
+
+
+## PlayerInputData.cs
+Компонент, который содержит в себе данные о вводе пользователя, используются для передвижения ракетки, bool значение указывает есть ли вообще движение
+```C#
+public struct PlayerInputData
+{
+    public (bool, Vector3) moveInput;
+}
+```
+
+
+
 ## PlayerInputSystem.cs
 Пример системы выполнения - считывание данных ввода игрока в Update (мышь для unity editor, Touch для android)
 ```C#
@@ -134,14 +147,6 @@ public class PlayerInputSystem : IEcsRunSystem
 }
 ```
 
-## PlayerInputData.cs
-Компонент, который содержит в себе данные о вводе пользователя, используются для передвижения ракетки, bool значение указывает есть ли вообще движение
-```C#
-public struct PlayerInputData
-{
-    public (bool, Vector3) moveInput;
-}
-```
 
 
 ## PlayerMovetData.cs

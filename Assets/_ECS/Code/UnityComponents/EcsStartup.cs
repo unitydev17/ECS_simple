@@ -31,7 +31,6 @@ public class EcsStartup : MonoBehaviour
             .Inject(configuration)
             .Inject(sceneData)
             .Inject(sceneData.camera)
-            .Inject(_systems)
             .Inject(_runtimeData)
             .Inject(sceneData.ui)
             .Init();

@@ -6,7 +6,7 @@
 
 ## ECSStartup.cs
 
-<code style="color : Yellowgreen">Содержит список систем игры</code>
+<code style="color : Yellow">Содержит список систем игры</code>
 
 
 ```C#
